@@ -1,3 +1,4 @@
+import router from '@/router'
 import { login } from '@/api/sys'
 import Md5 from 'md5'
 import { setItem, getItem } from '@/utils/storage'
@@ -33,6 +34,8 @@ export default {
             console.log(res)
             context.commit('setToken', res.token)
             // this.commit('user/setToken', res.data.data.token)
+            // 跳转至首页
+            router.push('/')
             resolve()
           })
           .catch((err) => {
