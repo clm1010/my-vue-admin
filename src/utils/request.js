@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { ICDE } from '@/constant'
+import store from '@/store'
 import { ElMessage } from 'element-plus'
 
 const service = axios.create({
@@ -11,11 +13,17 @@ const service = axios.create({
 /**
  * @description 请求拦截器
  * @param {*} config 配置
- * @returns 配置
+ * @returns Promise 返回结果
  */
 service.interceptors.request.use(
   (config) => {
-    config.headers.icode = '89C51D7EDCA7D6D0'
+    // 在这里统一注入 icode
+    config.headers.icode = ICDE
+    // 在这里统一注入 token
+    if (store.getters.token) {
+      config.headers.Authorization = `Bearer ${store.getters.token}`
+    }
+
     return config
   },
   (error) => {

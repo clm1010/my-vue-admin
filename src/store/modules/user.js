@@ -1,5 +1,5 @@
 import router from '@/router'
-import { login } from '@/api/sys'
+import { login, getUserInfo } from '@/api/sys'
 import Md5 from 'md5'
 import { setItem, getItem } from '@/utils/storage'
 import { TOKEN } from '@/constant'
@@ -11,12 +11,17 @@ export default {
   namespaced: true,
   state: () => ({
     // 自动登录 从本地存储中获取token 如果获取不到，则默认为空字符串
-    token: getItem(TOKEN) || ''
+    token: getItem(TOKEN) || '',
+    // 用户信息
+    userInfo: {}
   }),
   mutations: {
     setToken(state, token) {
       state.token = token
       setItem(TOKEN, token)
+    },
+    setUserInfo(state, userInfo) {
+      state.userInfo = userInfo
     }
   },
   actions: {
@@ -42,6 +47,16 @@ export default {
             reject(err)
           })
       })
+    },
+    /**
+     * @description 获取用户信息请求动作
+     * @param {*} context 上下文
+     * @returns Promise 返回结果
+     */
+    async getUserInfo(context) {
+      const res = await getUserInfo()
+      context.commit('setUserInfo', res)
+      return res
     }
   }
 }

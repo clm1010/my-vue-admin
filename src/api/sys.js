@@ -12,3 +12,14 @@ export const login = (data) => {
     data
   })
 }
+
+/**
+ * @description 获取用户信息
+ * @returns Promise 返回结果
+ */
+export const getUserInfo = () => {
+  return request({
+    url: '/sys/profile',
+    method: 'get'
+  })
+}
