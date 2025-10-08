@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { ICDE } from '@/constant'
 import store from '@/store'
+import { isCheckTimeout } from '@/utils/auth'
 import { ElMessage } from 'element-plus'
 
 const service = axios.create({
@@ -21,6 +22,12 @@ service.interceptors.request.use(
     config.headers.icode = ICDE
     // 在这里统一注入 token
     if (store.getters.token) {
+      // 检查是否超时
+      if (isCheckTimeout()) {
+        // 退出登录
+        store.dispatch('user/logout')
+        return Promise.reject(new Error('token 失效，登录超时'))
+      }
       config.headers.Authorization = `Bearer ${store.getters.token}`
     }
 

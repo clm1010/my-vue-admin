@@ -3,6 +3,8 @@ import { login, getUserInfo } from '@/api/sys'
 import Md5 from 'md5'
 import { setItem, getItem, removeAllItem } from '@/utils/storage'
 import { TOKEN } from '@/constant'
+import { setTimeStamp } from '@/utils/auth'
+
 /**
  * @description 用户模块
  */
@@ -41,6 +43,8 @@ export default {
             // this.commit('user/setToken', res.data.data.token)
             // 跳转至首页
             router.push('/')
+            // 保存登录时间
+            setTimeStamp()
             resolve()
           })
           .catch((err) => {
