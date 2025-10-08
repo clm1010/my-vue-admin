@@ -1,7 +1,7 @@
 import router from '@/router'
 import { login, getUserInfo } from '@/api/sys'
 import Md5 from 'md5'
-import { setItem, getItem } from '@/utils/storage'
+import { setItem, getItem, removeAllItem } from '@/utils/storage'
 import { TOKEN } from '@/constant'
 /**
  * @description 用户模块
@@ -57,6 +57,17 @@ export default {
       const res = await getUserInfo()
       context.commit('setUserInfo', res)
       return res
+    },
+    /**
+     * @description 退出登录请求动作
+     * @param {*} context 上下文
+     * @returns Promise 返回结果
+     */
+    logout(context) {
+      context.commit('setToken', '')
+      context.commit('setUserInfo', {})
+      removeAllItem()
+      router.push('/login')
     }
   }
 }

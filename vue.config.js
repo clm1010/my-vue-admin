@@ -39,5 +39,13 @@ module.exports = {
       })
       // 结束
       .end()
+
+    // 新增规则，处理 element-plus 2 错误
+    config.module
+      .rule('element-plus-2')
+      .test(/\.mjs$/)
+      .type('javascript/auto')
+      .include.add(/node_modules/)
+      .end()
   }
 }

@@ -9,7 +9,13 @@ const getters = {
    */
   hasUserInfo: (state) => {
     return JSON.stringify(state.user.userInfo) !== '{}'
-  }
+  },
+  /**
+   * @description 获取用户信息
+   * @param {*} state 状态
+   * @returns 用户信息
+   */
+  userInfo: (state) => state.user.userInfo
 }
 
 export default getters
