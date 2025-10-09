@@ -60,6 +60,14 @@ service.interceptors.response.use(
   },
   // 失败 处理错误
   (error) => {
+    // token 超时
+    if (
+      error.response &&
+      error.response.data &&
+      error.response.data.code === 401
+    ) {
+      store.dispatch('user/logout')
+    }
     console.log(error)
     ElMessage.error(error.message)
     return Promise.reject(error)
