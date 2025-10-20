@@ -1,7 +1,8 @@
-@import './variables.module.scss';
-@import './mixin.scss';
-@import './sidebar.scss';
+// ... existing code ...
 
+@use './variables.module.scss' as *;
+@use './mixin.scss' as *;
+@use './sidebar.scss' as *;
 html,
 body {
   height: 100%;
